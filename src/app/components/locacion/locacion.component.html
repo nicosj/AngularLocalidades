@@ -16,13 +16,13 @@
 
           <form [formGroup]="form" (ngSubmit)="guardarLocalidad()">
             <div class="input-group input-group-lg mb3">
-            <select  class="form-select" formControlName="paises" aria-label="Default select Argentina" >
-              <option label="--seleccione opcion --"></option>
+            <select  required  class="form-select"  formControlName="paises" aria-label="Default select Argentina" >
+              <option label="-- seleccione opcion --"></option>
               <option   value="Argentina">Argentina</option>
             </select>
             </div>
             <div class="input-group input-group-lg mb3">
-              <select  class="form-select" formControlName="provincias" aria-label="Default select example" >
+              <select  required  class="form-select"   formControlName="provincias" aria-label="Default select example" >
                 <option label="--seleccione opcion --"></option>
                 <option  value="Buenos Aires">Buenos Aires</option>
                 <option value="Buenos Aires Capital">Buenos Aires Capital</option>
@@ -51,7 +51,7 @@
               </select>
             </div>
             <div class="input-group input-group-lg mb-3"></div>
-            <input formControlName="departamentos" type="text" class="form-control input-sm" placeholder="Nueva localidad" required>
+            <input  required formControlName="departamentos" type="text" class="form-control input-sm" placeholder="Nueva localidad" >
             <div class="d-grid gp2">
             <button class="btn btn-success " type="submit">Agregar</button>
             </div>

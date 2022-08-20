@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {LocacionService} from "../../services/locacion.service";
+import {ToastrService} from "ngx-toastr";
+
 
 
 @Component({
@@ -13,7 +15,7 @@ export class LocacionComponent implements OnInit {
   accion ='Agregar'
   form: FormGroup
   id: number |undefined
-  constructor(private fb: FormBuilder, private _locacionService : LocacionService) {
+  constructor(private fb: FormBuilder,private toastr: ToastrService, private _locacionService : LocacionService) {
     this.form=this.fb.group({
       paises:[''],
       provincias:[''],
@@ -41,9 +43,17 @@ export class LocacionComponent implements OnInit {
           }
         }
       }
+
+    if((lugar.provincia.depto.departamentos == '' || lugar.provincia.depto.departamentos==null )||
+      ( lugar.paises==  ''|| lugar.paises==null) ||
+      (lugar.provincia.provincias==''|| lugar.provincia.provincias==null )
+    ){
+      this.toastr.info('complete el formulario', 'atenicon!!!');
+    } else{
     if(this.id== undefined){
       this._locacionService.save(lugar).subscribe(data=>{
         this.obtenerLocaciones()
+        this.toastr.success('Se guardo', 'ok');
       })}
       else
       { lugar.id=this.id
@@ -52,15 +62,17 @@ export class LocacionComponent implements OnInit {
           this.accion="agregar"
           this.id=undefined
           this.obtenerLocaciones()
+          this.toastr.success('Se guardo', 'ok');
         },error => {console.log(error)})
       }
+    }
 
     this.form.reset()
 
   }
   eliminar(id:number){
     this._locacionService.delete(id).subscribe(data=>{
-
+      this.toastr.error('Se elimino', 'ok');
     this.obtenerLocaciones()
     })
   }
